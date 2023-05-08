@@ -22,8 +22,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint --ignore-path .gitignore '**/*.js'",
-    "lint:fix": "eslint --fix --ignore-path .gitignore '**/*.js'"
+    "format": "prettier --write \"src/**/*.{js,jsx,json,css,scss,md}\"",
+    "lint": "eslint src/**/*.{js,jsx}",
+    "lint-fix": "eslint --fix src/**/*.{js,jsx}",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up"
   },
   "eslintConfig": {
     "extends": [
