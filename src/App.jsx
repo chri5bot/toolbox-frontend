@@ -1,10 +1,19 @@
 import React from 'react';
+import { Routes, BrowserRouter, Route } from 'react-router-dom';
+
+import Home from './pages/Home';
+import NotFound from './pages/NotFound';
 
 const App = () => {
   return (
-    <div>
-      <h1>test</h1>
-    </div>
+    <BrowserRouter>
+      <div style={{ width: 100, backgroundColor: 'red' }}>
+        <Routes>
+          <Route path="/" component={Home} />
+          <Route component={NotFound} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 };
 
