@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Navigation from '.';
+import Navigation from '../index';
 
 describe('Navigation', () => {
   test('renders Navigation component with Home link', () => {

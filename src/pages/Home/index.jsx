@@ -6,17 +6,26 @@ import { useNavigate } from 'react-router-dom';
 import Container from '../../components/Container';
 
 function Home() {
-  const [files, setFiles] = useState([]);
   const navigate = useNavigate();
 
+  const [files, setFiles] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isOk, setIsOk] = useState(false);
+
   const fetchData = useCallback(() => {
+    setIsLoading(true);
     axios
       .get('http://localhost:3000/files/list')
       .then((response) => {
+        setIsOk(true);
         setFiles(response.data.files);
       })
       .catch((error) => {
+        setIsOk(false);
         console.log(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []);
 
@@ -31,10 +40,18 @@ function Home() {
     [navigate]
   );
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isOk) {
+    return <div>Error fetching files</div>;
+  }
+
   return (
     <Container>
       <Alert variant="info">
-        Click in the file that you want to explore :)
+        Click on the file that you want to explore :)
       </Alert>
       <Table striped bordered hover>
         <thead>
