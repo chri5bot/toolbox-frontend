@@ -1,8 +1,4 @@
-Sure! Here is a sample README file for your React project:
-
 # React Project
-
-This is a sample React project.
 
 ## Getting Started
 
