@@ -7,7 +7,6 @@ import Container from '../../components/Container';
 
 function FileInfo() {
   const { filename } = useParams();
-  console.log('-----', filename);
   const [fileContent, setFileContent] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isOk, setIsOk] = useState(false);
