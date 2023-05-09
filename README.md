@@ -48,6 +48,24 @@ npm run build
 
 This will create an optimized build of the app in the `build` directory, which can then be deployed to your hosting service.
 
+## Running the app with Docker
+
+You can run the app using Docker Compose. To do so, execute the following commands:
+
+1. Build the Docker images:
+
+```bash
+npm run docker:build
+```
+
+2. Start the Docker containers:
+
+```bash
+npm run docker:up
+```
+
+The app should now be running in a Docker container. You can access it at `http://localhost:3000` (or another port if you've changed the `PORT` environment variable in the `docker-compose.yml` file).
+
 ## Contributing
 
 If you'd like to contribute to this project, please fork the repository and create a pull request. We welcome contributions from anyone, whether you're a beginner or an experienced developer.
