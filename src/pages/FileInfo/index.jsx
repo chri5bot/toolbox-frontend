@@ -1,17 +1,19 @@
 import React, { useMemo, memo } from 'react';
 import { useParams } from 'react-router-dom';
-import { Table, Button } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 
 import useFetchData from '../../hooks/useFetchData';
 
 import Container from '../../components/Container';
+import BackButton from '../../components/BackButton';
+
+const URL = 'http://localhost:3000/file/';
 
 function FileInfo() {
   const { filename } = useParams();
-  const { isLoading, isError, data } = useFetchData(
-    `http://localhost:3000/file/${filename}`,
-    [filename]
-  );
+  const { isLoading, isError, data } = useFetchData(`${URL}${filename}`, [
+    filename,
+  ]);
 
   const fileContent = useMemo(() => {
     if (data) {
@@ -31,9 +33,7 @@ function FileInfo() {
     return (
       <Container>
         <p>Sorry, the file is empty or something went wrong</p>
-        <Button href="/" variant="secondary">
-          Back
-        </Button>
+        <BackButton />
       </Container>
     );
   }
@@ -61,9 +61,7 @@ function FileInfo() {
           </tbody>
         </Table>
       </div>
-      <Button href="/" variant="secondary">
-        Back
-      </Button>
+      <BackButton />
     </Container>
   );
 }

@@ -7,13 +7,12 @@ import useFetchData from '../../hooks/useFetchData';
 
 import Container from '../../components/Container';
 
+const URL = 'http://localhost:3000/files/list';
+
 function Home() {
   const navigate = useNavigate();
 
-  const { isLoading, isError, data } = useFetchData(
-    'http://localhost:3000/files/list',
-    []
-  );
+  const { isLoading, isError, data } = useFetchData(URL, []);
 
   const files = useMemo(() => {
     if (data && data.files) {
