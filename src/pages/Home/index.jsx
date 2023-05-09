@@ -1,37 +1,25 @@
-import React, { useState, useEffect, useCallback, memo } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import axios from 'axios';
 import { Table, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+
+import useFetchData from '../../hooks/useFetchData';
 
 import Container from '../../components/Container';
 
 function Home() {
   const navigate = useNavigate();
 
-  const [files, setFiles] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isOk, setIsOk] = useState(false);
+  const { isLoading, isError, data } = useFetchData(
+    'http://localhost:3000/files/list',
+    []
+  );
 
-  const fetchData = useCallback(() => {
-    setIsLoading(true);
-    axios
-      .get('http://localhost:3000/files/list')
-      .then((response) => {
-        setIsOk(true);
-        setFiles(response.data.files);
-      })
-      .catch((error) => {
-        setIsOk(false);
-        console.log(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+  const files = useMemo(() => {
+    if (data && data.files) {
+      return data.files;
+    }
+  }, [data]);
 
   const handleClick = useCallback(
     (file) => {
@@ -44,7 +32,7 @@ function Home() {
     return <div>Loading...</div>;
   }
 
-  if (!isOk) {
+  if (!isLoading && (isError || !files)) {
     return <div>Error fetching files</div>;
   }
 
@@ -71,4 +59,4 @@ function Home() {
   );
 }
 
-export default memo(Home);
+export default Home;

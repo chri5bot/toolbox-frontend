@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
-import axios from 'axios';
+import axiosMock from 'axios';
 import { MemoryRouter } from 'react-router-dom';
 
 import Home from '..';
@@ -10,7 +10,7 @@ jest.mock('axios');
 describe('Home', () => {
   it('should render file names after successful API call', async () => {
     const files = ['file1.txt', 'file2.txt'];
-    axios.get.mockResolvedValue({ data: { files } });
+    axiosMock.get.mockResolvedValue({ data: { files } });
 
     render(
       <MemoryRouter>
@@ -25,7 +25,7 @@ describe('Home', () => {
   });
 
   it('should render error message after failed API call', async () => {
-    axios.get.mockRejectedValue(new Error('Failed to fetch files'));
+    axiosMock.get.mockRejectedValue(new Error('Failed to fetch files'));
 
     render(
       <MemoryRouter>

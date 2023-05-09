@@ -1,36 +1,23 @@
-import React, { useState, useEffect, useCallback, memo } from 'react';
-import axios from 'axios';
+import React, { useMemo, memo } from 'react';
 import { useParams } from 'react-router-dom';
 import { Table, Button } from 'react-bootstrap';
+
+import useFetchData from '../../hooks/useFetchData';
 
 import Container from '../../components/Container';
 
 function FileInfo() {
   const { filename } = useParams();
-  const [fileContent, setFileContent] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isOk, setIsOk] = useState(false);
+  const { isLoading, isError, data } = useFetchData(
+    `http://localhost:3000/file/${filename}`,
+    [filename]
+  );
 
-  const getFileContent = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const res = await axios.get(`http://localhost:3000/file/${filename}`);
-
-      if (res.data && res.data.length > 0) {
-        setFileContent(res.data);
-        setIsOk(true);
-      } else {
-        setIsOk(false);
-      }
-    } catch (err) {
-      setIsOk(false);
+  const fileContent = useMemo(() => {
+    if (data) {
+      return data;
     }
-    setIsLoading(false);
-  }, [filename]);
-
-  useEffect(() => {
-    getFileContent();
-  }, [getFileContent]);
+  }, [data]);
 
   if (isLoading) {
     return (
@@ -40,7 +27,7 @@ function FileInfo() {
     );
   }
 
-  if (!isOk && !isLoading) {
+  if (!isLoading && (isError || !fileContent || !fileContent.length > 0)) {
     return (
       <Container>
         <p>Sorry, the file is empty or something went wrong</p>
