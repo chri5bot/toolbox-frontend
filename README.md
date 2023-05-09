@@ -64,7 +64,7 @@ npm run docker:build
 npm run docker:up
 ```
 
-The app should now be running in a Docker container. You can access it at `http://localhost:3000` (or another port if you've changed the `PORT` environment variable in the `docker-compose.yml` file).
+The app should now be running in a Docker container. You can access it at `http://localhost:3001` (or another port if you've changed the `PORT` environment variable in the `docker-compose.yml` file).
 
 ## Contributing
 
