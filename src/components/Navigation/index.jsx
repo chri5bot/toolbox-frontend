@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
 
 function Navigation() {
   return (
@@ -9,13 +8,11 @@ function Navigation() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <LinkContainer to="/">
-            <Nav.Link>Home</Nav.Link>
-          </LinkContainer>
+          <Nav.Link href="/">Home</Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
   );
 }
 
-export default Navigation;
+export default memo(Navigation);

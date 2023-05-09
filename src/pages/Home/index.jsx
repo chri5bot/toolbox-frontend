@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, memo } from 'react';
 import axios from 'axios';
-import { Table } from 'react-bootstrap';
+import { Table, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+
+import Container from '../../components/Container';
 
 function Home() {
   const [files, setFiles] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
+  const fetchData = useCallback(() => {
     axios
       .get('http://localhost:3000/files/list')
       .then((response) => {
@@ -18,27 +20,38 @@ function Home() {
       });
   }, []);
 
-  const handleClick = (file) => {
-    console.log(file);
-    navigate(`/${file}`);
-  };
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  const handleClick = useCallback(
+    (file) => {
+      navigate(`/${file}`);
+    },
+    [navigate]
+  );
 
   return (
-    <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>Filename</th>
-        </tr>
-      </thead>
-      <tbody>
-        {files.map((file) => (
-          <tr key={file} onClick={() => handleClick(file)}>
-            <td>{file}</td>
+    <Container>
+      <Alert variant="info">
+        Click in the file that you want to explore :)
+      </Alert>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>Filename</th>
           </tr>
-        ))}
-      </tbody>
-    </Table>
+        </thead>
+        <tbody>
+          {files.map((file) => (
+            <tr key={file} onClick={() => handleClick(file)}>
+              <td>{file}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </Container>
   );
 }
 
-export default Home;
+export default memo(Home);
